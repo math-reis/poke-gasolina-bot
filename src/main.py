@@ -140,6 +140,10 @@ def get_tweet():
         url = 'https://precodoscombustiveis.com.br/pt-br/city/brasil/distrito-federal/brasilia/5564'
         uf = 'Brasília/DF'
 
+    else:
+        url = 'https://precodoscombustiveis.com.br/pt-br/city/brasil/sao-paulo/sao-paulo/3830'
+        uf = 'São Paulo/SP'
+
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
 
     webpage = urlopen(req).read()
