@@ -41,10 +41,8 @@ def get_tweet():
         uf = 'Maceió/AL'
 
     if ufNumber == 3:
-        # url = 'https://precodoscombustiveis.com.br/pt-br/city/brasil/amapa/macapa/301'
-        # uf = 'Macapá/AP'
-        url = 'https://precodoscombustiveis.com.br/pt-br/city/brasil/sao-paulo/sao-paulo/3830'
-        uf = 'São Paulo/SP'
+        url = 'https://precodoscombustiveis.com.br/pt-br/city/brasil/amapa/macapa/301'
+        uf = 'Macapá/AP'
 
     if ufNumber == 4:
         url = 'https://precodoscombustiveis.com.br/pt-br/city/brasil/amazonas/manaus/112'
@@ -148,11 +146,13 @@ def get_tweet():
 
     html = webpage.decode("utf-8")
 
-    preco = re.findall('<span style="font-size:28px;">(.*)</span>', html)[0]
+    partialPreco = re.findall('<span style="font-size:28px;">(.*)</span>', html)[0]
 
-    frase = f'Preço médio da gasolina em {uf} é {preco}'
+    preco = (partialPreco.replace('.', ','))[0:7]
 
-    partialIdPokemon = preco.replace('R$ ', '')
+    frase = f'O preço médio da gasolina em {uf} é {preco}'
+
+    partialIdPokemon = partialPreco.replace('R$ ', '')
 
     idPokemon = (partialIdPokemon.replace('.', ''))[:3]
 
@@ -201,7 +201,7 @@ else:
 
 query = 'Gasolina Preço OR Combustível Preço OR Combustível'
 
-response = client.search_recent_tweets(query, max_results = 15, tweet_fields = ['author_id'])
+response = client.search_recent_tweets(query, max_results = 10, tweet_fields = ['author_id'])
 
 for tweet in response.data:
     list = [tweet.author_id]
